@@ -1,0 +1,2 @@
+# DailyWidget
+Android Daily Widget
