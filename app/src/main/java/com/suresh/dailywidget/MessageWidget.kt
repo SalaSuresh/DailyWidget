@@ -21,15 +21,15 @@ class MessageWidget : AppWidgetProvider() {
         )
         for (appWidgetId in appWidgetIds!!) {
             val intent = Intent(context, MainActivity::class.java)
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
             val remoteViews = RemoteViews(context!!.packageName, R.layout.title_widget)
             remoteViews.setOnClickPendingIntent(R.id.textMessage, pendingIntent)
             appWidgetManager!!.updateAppWidget(appWidgetId, remoteViews)
         }
-    }
-
-    override fun onReceive(context: Context?, intent: Intent?) {
-        super.onReceive(context, intent)
-        Log.d("test", "onReceive() called with: context = $context, intent = $intent")
     }
 }
