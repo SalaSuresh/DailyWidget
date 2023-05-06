@@ -9,7 +9,10 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.suresh.dailywidget.model.QuoteMessage
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.suresh.dailywidget.adapter.QuotesRecyclerAdapter
+import com.suresh.dailywidget.model.Quote
 import com.suresh.dailywidget.network.ApiClient
 import com.suresh.dailywidget.network.ApiInterface
 import com.suresh.dailywidget.preferences.WidgetPreferences
@@ -17,11 +20,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), QuotesRecyclerAdapter.QuoteSelectListener {
     private lateinit var textQuote: TextView
     private lateinit var textQuoteMaster: TextView
     private lateinit var buttonRefreshQuote: Button
     private lateinit var switchRefreshOption: Switch
+    private lateinit var recyclerQuotes: RecyclerView
     private lateinit var widgetPreferences: WidgetPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         textQuote = findViewById(R.id.textQuote)
         textQuoteMaster = findViewById(R.id.textQuoteMaster)
+        recyclerQuotes = findViewById(R.id.recyclerQuotes)
 
         switchRefreshOption = findViewById(R.id.switchRefresh)
         switchRefreshOption.setOnCheckedChangeListener { _, isChecked ->
@@ -39,13 +44,14 @@ class MainActivity : AppCompatActivity() {
 
         buttonRefreshQuote = findViewById(R.id.buttonRefreshQuote)
         buttonRefreshQuote.setOnClickListener {
-            getQuoteData()
+            getQuoteData(true)
         }
     }
 
     override fun onResume() {
         super.onResume()
         updateQuoteUI()
+        getQuoteData(false)
     }
 
     private fun updateQuoteUI() {
@@ -55,20 +61,24 @@ class MainActivity : AppCompatActivity() {
         textQuoteMaster.text = quoteMaster
     }
 
-    private fun getQuoteData() {
+    private fun getQuoteData(updateQuoteOnWidget: Boolean) {
         val apiInterface: ApiInterface =
             ApiClient().getApiClient()!!.create(ApiInterface::class.java)
-        apiInterface.getWidgetQuotes().enqueue(object : Callback<List<QuoteMessage>> {
+        apiInterface.getWidgetQuotes().enqueue(object : Callback<List<Quote>> {
             override fun onResponse(
-                call: Call<List<QuoteMessage>>,
-                response: Response<List<QuoteMessage>>
+                call: Call<List<Quote>>,
+                response: Response<List<Quote>>
             ) {
                 val widgetQuotes = response.body()!!
-                val randomNumber = (widgetQuotes.indices).random()
-                updateWidgetQuote(widgetQuotes[randomNumber])
+                if (updateQuoteOnWidget) {
+                    updateWidgetQuote(widgetQuotes)
+                } else {
+                    updateQuotesRecycler(widgetQuotes)
+                }
+
             }
 
-            override fun onFailure(call: Call<List<QuoteMessage>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Quote>>, t: Throwable) {
                 Toast.makeText(
                     this@MainActivity,
                     getString(R.string.failed_to_load),
@@ -78,9 +88,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun updateWidgetQuote(quoteMessage: QuoteMessage) {
-        widgetPreferences.saveQuote(quoteMessage.quote!!)
-        widgetPreferences.saveQuoteMaster(quoteMessage.quotemaster!!)
+    private fun updateQuotesRecycler(widgetQuotes: List<Quote>) {
+        recyclerQuotes.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val quotesRecyclerAdapter = QuotesRecyclerAdapter(widgetQuotes, this@MainActivity)
+        recyclerQuotes.adapter = quotesRecyclerAdapter
+    }
+
+    private fun updateWidgetQuote(quotes: List<Quote>) {
+        val randomNumber = (quotes.indices).random()
+        widgetPreferences.saveQuote(quotes[randomNumber].quote!!)
+        widgetPreferences.saveQuoteMaster(quotes[randomNumber].quotemaster!!)
         updateWidgetUI()
         updateQuoteUI()
     }
@@ -92,5 +110,12 @@ class MainActivity : AppCompatActivity() {
             .getAppWidgetIds(ComponentName(this@MainActivity, MessageWidget::class.java))
         widgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(widgetIntent)
+    }
+
+    override fun onItemClick(quote: Quote) {
+        widgetPreferences.saveQuote(quote.quote!!)
+        widgetPreferences.saveQuoteMaster(quote.quotemaster!!)
+        updateWidgetUI()
+        updateQuoteUI()
     }
 }

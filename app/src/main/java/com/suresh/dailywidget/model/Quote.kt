@@ -1,6 +1,6 @@
 package com.suresh.dailywidget.model
 
-class QuoteMessage {
+class Quote {
     var quote: String? = null
     var quotemaster: String? = null
 }

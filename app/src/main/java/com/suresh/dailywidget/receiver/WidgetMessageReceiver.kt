@@ -8,7 +8,7 @@ import android.content.Intent
 import android.widget.Toast
 import com.suresh.dailywidget.MessageWidget
 import com.suresh.dailywidget.R
-import com.suresh.dailywidget.model.QuoteMessage
+import com.suresh.dailywidget.model.Quote
 import com.suresh.dailywidget.network.ApiClient
 import com.suresh.dailywidget.network.ApiInterface
 import com.suresh.dailywidget.preferences.WidgetPreferences
@@ -24,17 +24,17 @@ class WidgetMessageReceiver : BroadcastReceiver() {
     private fun getQuoteData(context: Context?) {
         val apiInterface: ApiInterface =
             ApiClient().getApiClient()!!.create(ApiInterface::class.java)
-        apiInterface.getWidgetQuotes().enqueue(object : Callback<List<QuoteMessage>> {
+        apiInterface.getWidgetQuotes().enqueue(object : Callback<List<Quote>> {
             override fun onResponse(
-                call: Call<List<QuoteMessage>>,
-                response: Response<List<QuoteMessage>>
+                call: Call<List<Quote>>,
+                response: Response<List<Quote>>
             ) {
                 val widgetQuotes = response.body()!!
                 val randomNumber = (widgetQuotes.indices).random()
                 updateWidgetQuote(context, widgetQuotes[randomNumber])
             }
 
-            override fun onFailure(call: Call<List<QuoteMessage>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Quote>>, t: Throwable) {
                 Toast.makeText(
                     context,
                     context!!.getString(R.string.failed_to_load),
@@ -44,7 +44,7 @@ class WidgetMessageReceiver : BroadcastReceiver() {
         })
     }
 
-    private fun updateWidgetQuote(context: Context?, quoteMessage: QuoteMessage) {
+    private fun updateWidgetQuote(context: Context?, quoteMessage: Quote) {
         val widgetPreferences = WidgetPreferences(context!!)
         widgetPreferences.saveQuote(quoteMessage.quote!!)
         widgetPreferences.saveQuoteMaster(quoteMessage.quotemaster!!)

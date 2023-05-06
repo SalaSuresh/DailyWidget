@@ -17,6 +17,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
+        android:importantForAccessibility="no"
         android:src="@drawable/baseline_refresh_24"
         android:visibility="gone" />
 
@@ -47,6 +48,5 @@
         android:minWidth="100dp"
         android:text="@string/test_message"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textColor="@android:color/black" />
 </RelativeLayout>
