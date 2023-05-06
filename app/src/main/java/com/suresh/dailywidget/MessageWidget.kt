@@ -24,18 +24,6 @@ class MessageWidget : AppWidgetProvider() {
             TAG,
             "onUpdate() called with: context = $context, appWidgetManager = $appWidgetManager, appWidgetIds = $appWidgetIds"
         )
-        /*for (appWidgetId in appWidgetIds!!) {
-            val intent = Intent(context, MainActivity::class.java)
-            val pendingIntent = PendingIntent.getActivity(
-                context,
-                0,
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_message)
-            remoteViews.setOnClickPendingIntent(R.id.textMessage, pendingIntent)
-            appWidgetManager!!.updateAppWidget(appWidgetId, remoteViews)
-        }*/
         for (appWidgetId in appWidgetIds!!) {
             updateWidgetUI(context, appWidgetManager, appWidgetId)
         }
@@ -77,22 +65,6 @@ class MessageWidget : AppWidgetProvider() {
         )
         remoteViews.setOnClickPendingIntent(R.id.textQuote, pendingIntent)
         appWidgetManager!!.updateAppWidget(appWidgetId, remoteViews)
-
-        /*val sharedPreference: SharedPreferences = context.getSharedPreferences(
-            "PREF",
-            AppCompatActivity.MODE_PRIVATE
-        )
-        val message = sharedPreference.getString("message", "No Message")*/
-
-//        val intent = Intent(context, MainActivity::class.java)
-        /*val pendingIntent = PendingIntent.getActivity(
-            context,
-            0,
-            intent,
-            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )*/
-
-//        remoteViews.setOnClickPendingIntent(R.id.buttonAction, pendingIntent)
     }
 
     override fun onAppWidgetOptionsChanged(

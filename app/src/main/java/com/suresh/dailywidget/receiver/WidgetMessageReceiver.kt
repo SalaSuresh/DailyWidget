@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import com.suresh.dailywidget.MessageWidget
 import com.suresh.dailywidget.R
@@ -19,25 +18,9 @@ import retrofit2.Response
 
 class WidgetMessageReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("test", "onReceive() called with: context = $context, intent = $intent")
         getQuoteData(context)
     }
 
-    /*private fun getData(context: Context?) {
-        val apiInterface: ApiInterface =
-            ApiClient().getApiClient()!!.create(ApiInterface::class.java)
-        apiInterface.getWidgetMessage().enqueue(object : Callback<WidgetMessage> {
-            override fun onResponse(call: Call<WidgetMessage>, response: Response<WidgetMessage>) {
-                val widgetMessage: WidgetMessage = response.body()!!
-                Log.d("test", "message: ${widgetMessage.message}")
-                Log.d("test", "title: ${widgetMessage.title}")
-                updateWidget(context, widgetMessage.message.toString())
-            }
-
-            override fun onFailure(call: Call<WidgetMessage>, t: Throwable) {
-            }
-        })
-    }*/
     private fun getQuoteData(context: Context?) {
         val apiInterface: ApiInterface =
             ApiClient().getApiClient()!!.create(ApiInterface::class.java)
@@ -62,7 +45,7 @@ class WidgetMessageReceiver : BroadcastReceiver() {
     }
 
     private fun updateWidgetQuote(context: Context?, quoteMessage: QuoteMessage) {
-        val widgetPreferences: WidgetPreferences = WidgetPreferences(context!!)
+        val widgetPreferences = WidgetPreferences(context!!)
         widgetPreferences.saveQuote(quoteMessage.quote!!)
         widgetPreferences.saveQuoteMaster(quoteMessage.quotemaster!!)
         updateWidgetUI(context)
@@ -76,23 +59,4 @@ class WidgetMessageReceiver : BroadcastReceiver() {
         widgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         context.sendBroadcast(widgetIntent)
     }
-
-    /*private fun updateWidget(context: Context?, message: String) {
-//        Toast.makeText(this, "Update Widget", Toast.LENGTH_SHORT).show()
-        val sharedPreference: SharedPreferences = context!!.getSharedPreferences(
-            "PREF",
-            AppCompatActivity.MODE_PRIVATE
-        )
-        val editor = sharedPreference.edit()
-        editor.putString("message", message)
-        editor.apply()
-
-        //Updating Widget
-        val widgetIntent = Intent(context, MessageWidget::class.java)
-        widgetIntent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        val ids = AppWidgetManager.getInstance(context)
-            .getAppWidgetIds(ComponentName(context, MessageWidget::class.java))
-        widgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-        context.sendBroadcast(widgetIntent)
-    }*/
 }
