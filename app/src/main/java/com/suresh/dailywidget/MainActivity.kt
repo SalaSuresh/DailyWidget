@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity(), QuotesRecyclerAdapter.QuoteSelectListe
     private lateinit var textQuote: TextView
     private lateinit var textQuoteMaster: TextView
     private lateinit var buttonRefreshQuote: Button
+    private lateinit var buttonShareQuote: Button
     private lateinit var switchRefreshOption: Switch
     private lateinit var recyclerQuotes: RecyclerView
     private lateinit var widgetPreferences: WidgetPreferences
@@ -46,6 +47,24 @@ class MainActivity : AppCompatActivity(), QuotesRecyclerAdapter.QuoteSelectListe
         buttonRefreshQuote.setOnClickListener {
             getQuoteData(true)
         }
+        buttonShareQuote = findViewById(R.id.buttonShareQuote)
+        buttonShareQuote.setOnClickListener {
+            val quote = widgetPreferences.getQuote()
+            val quoteMaster = widgetPreferences.getQuoteMaster()
+            val quoteMessage = "${quote}\n-${quoteMaster}"
+            shareQuote(quoteMessage)
+        }
+    }
+
+    private fun shareQuote(quoteMessage: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, quoteMessage)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, getString(R.string.share_title))
+        startActivity(shareIntent)
     }
 
     override fun onResume() {
@@ -117,5 +136,10 @@ class MainActivity : AppCompatActivity(), QuotesRecyclerAdapter.QuoteSelectListe
         widgetPreferences.saveQuoteMaster(quote.quotemaster!!)
         updateWidgetUI()
         updateQuoteUI()
+    }
+
+    override fun onShareClick(quote: Quote) {
+        val quoteMessage = "${quote.quote}\n-${quote.quotemaster}"
+        shareQuote(quoteMessage)
     }
 }

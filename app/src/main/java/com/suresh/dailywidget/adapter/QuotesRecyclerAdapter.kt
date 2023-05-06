@@ -16,17 +16,22 @@ class QuotesRecyclerAdapter(
 
     interface QuoteSelectListener {
         fun onItemClick(quote: Quote)
+        fun onShareClick(quote: Quote)
     }
 
-    class QuoteViewHolder(itemView: View, private val itemClick: QuoteSelectListener) :
+    class QuoteViewHolder(itemView: View, private val quoteClick: QuoteSelectListener) :
         RecyclerView.ViewHolder(itemView) {
         private val textQuote: TextView = itemView.findViewById(R.id.textQuote)
         private val textQuoteMaster: TextView = itemView.findViewById(R.id.textQuoteMaster)
+        private val buttonShareQuote: TextView = itemView.findViewById(R.id.buttonShare)
         fun bindData(quote: Quote) {
             textQuote.text = quote.quote
             textQuoteMaster.text = quote.quotemaster
             itemView.setOnClickListener {
-                itemClick.onItemClick(quote)
+                quoteClick.onItemClick(quote)
+            }
+            buttonShareQuote.setOnClickListener {
+                quoteClick.onShareClick(quote)
             }
         }
     }

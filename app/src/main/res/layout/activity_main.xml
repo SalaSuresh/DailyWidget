@@ -10,23 +10,22 @@
     <TextView
         android:id="@+id/textTitle"
         android:layout_width="match_parent"
-        android:layout_height="104dp"
+        android:layout_height="80dp"
         android:autoSizeTextType="uniform"
-        android:fontFamily="@font/quote_message_font"
+        android:fontFamily="@font/cormorant_sc_medium"
         android:text="@string/daily_quote"
         android:textAlignment="center"
         android:textColor="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textSubTitle"
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:autoSizeTextType="uniform"
-        android:fontFamily="@font/quote_message_font"
+        android:fontFamily="@font/arima_madurai"
         android:text="@string/be_motivated"
         android:textAlignment="center"
         android:textColor="@color/purple_700"
@@ -47,7 +46,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewQuote"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
+        android:layout_height="200dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -90,6 +89,29 @@
                 android:textColor="@android:color/black"
                 android:textStyle="normal" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonShareQuote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/share" />
+
+                <Button
+                    android:id="@+id/buttonRefreshQuote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/refresh" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -127,30 +149,17 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/buttonRefreshQuote"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="8dp"
-        android:autoSizeTextType="uniform"
-        android:padding="12dp"
-        android:text="@string/refresh_quote"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
     <TextView
         android:id="@+id/text_quotes_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/quotes"
+        android:textColor="@android:color/black"
+
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRefreshQuote"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerQuotes"
