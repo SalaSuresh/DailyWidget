@@ -13,7 +13,6 @@
         android:layout_height="104dp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/quote_message_font"
-        android:padding="16dp"
         android:text="@string/daily_quote"
         android:textAlignment="center"
         android:textColor="@color/purple_700"
@@ -46,16 +45,65 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewQuote"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSubTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/textQuote"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="sans-serif-light"
+                android:padding="8dp"
+                android:text="@string/test_message"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textQuoteMaster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="sans-serif-light"
+                android:minWidth="100dp"
+                android:text="@string/test_message"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textSubTitle">
+        app:layout_constraintTop_toBottomOf="@+id/cardViewQuote">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

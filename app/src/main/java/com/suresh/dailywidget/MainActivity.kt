@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.suresh.dailywidget.model.QuoteMessage
@@ -17,6 +18,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var textQuote: TextView
+    private lateinit var textQuoteMaster: TextView
     private lateinit var buttonRefreshQuote: Button
     private lateinit var switchRefreshOption: Switch
     private lateinit var widgetPreferences: WidgetPreferences
@@ -24,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         widgetPreferences = WidgetPreferences(this@MainActivity)
+
+        textQuote = findViewById(R.id.textQuote)
+        textQuoteMaster = findViewById(R.id.textQuoteMaster)
 
         switchRefreshOption = findViewById(R.id.switchRefresh)
         switchRefreshOption.setOnCheckedChangeListener { _, isChecked ->
@@ -35,6 +41,18 @@ class MainActivity : AppCompatActivity() {
         buttonRefreshQuote.setOnClickListener {
             getQuoteData()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateQuoteUI()
+    }
+
+    private fun updateQuoteUI() {
+        val quote = widgetPreferences.getQuote()
+        val quoteMaster = widgetPreferences.getQuoteMaster()
+        textQuote.text = quote
+        textQuoteMaster.text = quoteMaster
     }
 
     private fun getQuoteData() {
@@ -64,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         widgetPreferences.saveQuote(quoteMessage.quote!!)
         widgetPreferences.saveQuoteMaster(quoteMessage.quotemaster!!)
         updateWidgetUI()
+        updateQuoteUI()
     }
 
     private fun updateWidgetUI() {
