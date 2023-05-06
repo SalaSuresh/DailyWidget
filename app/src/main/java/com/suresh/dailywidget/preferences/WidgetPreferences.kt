@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import androidx.appcompat.app.AppCompatActivity
+import com.suresh.dailywidget.constants.ApplicationConstants
 
 class WidgetPreferences(context: Context) {
     private var sharedPreference: SharedPreferences? = null
@@ -40,7 +41,10 @@ class WidgetPreferences(context: Context) {
     }
 
     fun getQuote(): String? {
-        return sharedPreference!!.getString(PreferenceConstants.PREF_QUOTE, "No Quote Available")
+        return sharedPreference!!.getString(
+            PreferenceConstants.PREF_QUOTE,
+            ApplicationConstants.DEFAULT_QUOTE
+        )
     }
 
     fun saveQuoteMaster(quoteMaster: String) {
@@ -51,7 +55,7 @@ class WidgetPreferences(context: Context) {
     fun getQuoteMaster(): String? {
         return sharedPreference!!.getString(
             PreferenceConstants.PREF_QUOTE_MASTER,
-            "No Quote Master Available"
+            ApplicationConstants.DEFAULT_QUOTE_MASTER
         )
     }
 
