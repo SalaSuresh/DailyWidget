@@ -81,7 +81,7 @@ class MessageWidget : AppWidgetProvider() {
                     "newOptions = $newOptions"
         )
         //TODO: This is to add functionality to change the UI according to the size of widget
-        val views: RemoteViews = RemoteViews(context!!.packageName, R.layout.widget_message)
+        val views = RemoteViews(context!!.packageName, R.layout.widget_message)
 
         val minWidth = newOptions!!.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
         val maxWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH)
