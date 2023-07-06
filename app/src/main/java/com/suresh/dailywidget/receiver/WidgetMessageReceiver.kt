@@ -8,7 +8,7 @@ import android.content.Intent
 import android.widget.Toast
 import com.suresh.dailywidget.MessageWidget
 import com.suresh.dailywidget.R
-import com.suresh.dailywidget.model.Quote
+import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.network.ApiClient
 import com.suresh.dailywidget.network.ApiInterface
 import com.suresh.dailywidget.preferences.WidgetPreferences

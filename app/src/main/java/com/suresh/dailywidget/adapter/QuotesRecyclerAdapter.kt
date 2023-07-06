@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.suresh.dailywidget.R
-import com.suresh.dailywidget.model.Quote
+import com.suresh.dailywidget.models.Quote
 
 class QuotesRecyclerAdapter(
     private val quotes: List<Quote>,

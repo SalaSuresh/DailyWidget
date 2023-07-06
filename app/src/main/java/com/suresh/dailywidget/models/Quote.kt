@@ -1,4 +1,4 @@
-package com.suresh.dailywidget.model
+package com.suresh.dailywidget.models
 
 class Quote {
     var quote: String? = null
