@@ -1,29 +1,36 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditTextPreference
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        app:defaultValue="@string/app_name"
         app:icon="@drawable/ic_name"
-        app:key="userName"
+        app:key="keyUserName"
+        app:singleLineTitle="true"
         app:title="@string/your_name"
         app:useSimpleSummaryProvider="true" />
 
     <SwitchPreferenceCompat
+        app:defaultValue="false"
         app:icon="@drawable/baseline_refresh_24"
-        app:key="showRefresh"
+        app:key="keyShowRefresh"
         app:summary="@string/show_refresh_summary"
         app:title="@string/show_refresh" />
 
     <SwitchPreferenceCompat
+        app:defaultValue="false"
         app:icon="@drawable/ic_quote"
-        app:key="showQuotes"
+        app:key="keyShowQuotes"
         app:summary="@string/show_quotes_summary"
         app:title="@string/show_quotes" />
-    
+
     <ListPreference
         app:defaultValue="reply"
         app:entries="@array/reply_entries"
         app:entryValues="@array/reply_values"
-        app:key="reply"
         app:icon="@drawable/ic_color"
+        app:key="reply"
         app:title="@string/reply_title"
         app:useSimpleSummaryProvider="true" />
 
