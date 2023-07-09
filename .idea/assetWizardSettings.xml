@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/share/baseline_share_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../AndroidSDK/Sdk/icons/material/materialicons/color_lens/baseline_color_lens_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,9 +29,9 @@
                         <option name="values">
                           <map>
                             <entry key="autoMirrored" value="true" />
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_share" />
-                            <entry key="sourceFile" value="/D:\Projects\Portfolio\DailyWidget" />
+                            <entry key="color" value="a9a9a9" />
+                            <entry key="outputName" value="ic_color" />
+                            <entry key="sourceFile" value="D:\Projects\Portfolio\DailyWidget" />
                           </map>
                         </option>
                       </PersistentState>

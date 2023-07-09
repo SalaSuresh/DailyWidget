@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DailyWidget</string>
+    <string name="app_name">Daily Quote</string>
     <string name="failed_to_load">Failed to load Quote</string>
     <string name="test_message">Test Message</string>
     <string name="refresh">Refresh</string>
@@ -10,4 +10,27 @@
     <string name="quotes">Quotes</string>
     <string name="share">Share</string>
     <string name="share_title">Share Daily Quote</string>
+    <string name="your_name">Your Name</string>
+    <string name="show_refresh">Show Refresh</string>
+    <string name="show_refresh_summary">Enable to show refresh button on widget</string>
+    <string name="show_quotes">Show Quotes</string>
+    <string name="show_quotes_summary">Enable to show quotes in widget</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="settings">Settings</string>
 </resources>
