@@ -13,9 +13,17 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_quotesFragment"
+            app:destination="@id/quotesFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.suresh.dailywidget.SettingsFragment"
         android:label="@string/settings" />
+    <fragment
+        android:id="@+id/quotesFragment"
+        android:name="com.suresh.dailywidget.QuotesFragment"
+        android:label="fragment_quotes"
+        tools:layout="@layout/fragment_quotes" />
 </navigation>

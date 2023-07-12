@@ -33,5 +33,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="close">Close</string>
+    <string name="change_quote">Change Quote</string>
+    <string name="more_quotes">More Quotes</string>
+    <string name="widget_color">Widget Color</string>
 
 </resources>
