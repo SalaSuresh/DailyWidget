@@ -324,7 +324,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../AndroidSDK/Sdk/icons/material/materialicons/refresh/baseline_refresh_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../AndroidSDK/Sdk/icons/material/materialicons/add/baseline_add_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -336,7 +336,7 @@
                           <map>
                             <entry key="autoMirrored" value="true" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_refresh_light" />
+                            <entry key="outputName" value="ic_add" />
                             <entry key="sourceFile" value="D:\Projects\Portfolio\DailyWidget" />
                           </map>
                         </option>

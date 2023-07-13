@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Daily Quote</string>
     <string name="failed_to_load">Failed to load Quote</string>
-    <string name="test_message">Test Message</string>
+    <string name="test_message">\"Test Message\"</string>
     <string name="refresh">Refresh</string>
     <string name="action">Action</string>
     <string name="daily_quote">Daily Quote</string>
@@ -16,6 +16,7 @@
     <string name="show_quotes">Show Quotes</string>
     <string name="show_quotes_summary">Enable to show quotes in widget</string>
     <string name="settings">Settings</string>
+    <string name="add_new">Add new</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
