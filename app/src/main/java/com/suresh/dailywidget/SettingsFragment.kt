@@ -13,7 +13,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onCreate(savedInstanceState)
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                NavHostFragment.findNavController(this@SettingsFragment).navigateUp();
+                NavHostFragment.findNavController(this@SettingsFragment).navigateUp()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(
