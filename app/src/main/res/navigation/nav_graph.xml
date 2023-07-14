@@ -24,6 +24,6 @@
     <fragment
         android:id="@+id/quotesFragment"
         android:name="com.suresh.dailywidget.QuotesFragment"
-        android:label="fragment_quotes"
+        android:label="@string/quotes"
         tools:layout="@layout/fragment_quotes" />
 </navigation>
