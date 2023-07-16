@@ -1,7 +1,6 @@
 package com.suresh.dailywidget.screens.quotes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,7 +12,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.NavHostFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.suresh.dailywidget.R
 import com.suresh.dailywidget.adapter.QuotesRecyclerAdapter2
@@ -22,26 +21,34 @@ import com.suresh.dailywidget.models.Quote
 
 class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     private lateinit var binding: FragmentQuotesBinding
+    private lateinit var viewModel: QuotesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[QuotesViewModel::class.java]
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                NavHostFragment.findNavController(this@QuotesFragment).navigateUp()
+                viewModel.closeFragment(this@QuotesFragment)
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this, onBackPressedCallback
-        )
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQuotesBinding.inflate(layoutInflater, container, false)
         setupActionbarItems()
         showQuotesList()
+        binding.fabAddQuote.setOnClickListener {
+            showDialogToAddQuote()
+        }
         return binding.root
+    }
+
+    private fun showDialogToAddQuote() {
+        TODO("Not yet implemented")
     }
 
     private fun setupActionbarItems() {
@@ -55,30 +62,24 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                Log.d("test", "onMenuItemSelected.....")
-                if (menuItem.itemId == R.id.actionDownload) {
-                    downloadQuotes()
+                when (menuItem.itemId) {
+                    R.id.actionDownload -> {
+                        viewModel.downloadQuotes(requireActivity())
+                    }
+
+                    android.R.id.home -> {
+                        viewModel.closeFragment(this@QuotesFragment)
+                    }
                 }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun downloadQuotes() {
-
-    }
-
     private fun showQuotesList() {
-        val widgetQuotes = ArrayList<Quote>()
-        for (a in 1..5) {
-            val quote = Quote()
-            quote.quote = "Test Title $a"
-            quote.quotemaster = "Test Message $a"
-            widgetQuotes.add(quote)
-        }
         binding.recyclerQuotes.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val quotesRecyclerAdapter = QuotesRecyclerAdapter2(widgetQuotes, this)
+        val quotesRecyclerAdapter = QuotesRecyclerAdapter2(viewModel.getQuotesList(), this)
         binding.recyclerQuotes.adapter = quotesRecyclerAdapter
     }
 

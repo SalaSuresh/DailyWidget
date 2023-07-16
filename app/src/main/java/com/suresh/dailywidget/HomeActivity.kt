@@ -19,6 +19,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //TODO: will be used later based on requirement
         val viewModel: HomeActivityViewModel =
             ViewModelProvider(this)[HomeActivityViewModel::class.java]
 
