@@ -32,7 +32,7 @@
         </activity>
 
         <receiver
-            android:name=".MessageWidget"
+            android:name=".screens.widget.MessageWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

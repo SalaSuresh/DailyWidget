@@ -2,6 +2,7 @@ package com.suresh.dailywidget
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val viewModel: HomeActivityViewModel =
+            ViewModelProvider(this)[HomeActivityViewModel::class.java]
 
         navHostFragment =
             supportFragmentManager
