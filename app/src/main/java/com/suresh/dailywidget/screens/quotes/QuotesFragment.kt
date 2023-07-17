@@ -79,7 +79,9 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     private fun showQuotesList() {
         binding.recyclerQuotes.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val quotesRecyclerAdapter = QuotesRecyclerAdapter2(viewModel.getQuotesList(), this)
+        val quotesList = viewModel.getQuotesList(requireActivity())
+        val quotesRecyclerAdapter =
+            QuotesRecyclerAdapter2(quotesList, this)
         binding.recyclerQuotes.adapter = quotesRecyclerAdapter
     }
 

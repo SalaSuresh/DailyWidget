@@ -4,10 +4,12 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.NavHostFragment
+import com.google.gson.Gson
 import com.suresh.dailywidget.R
 import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.network.ApiClient
 import com.suresh.dailywidget.network.ApiInterface
+import com.suresh.dailywidget.preferences.WidgetPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +30,8 @@ class QuotesViewModel : ViewModel() {
             ) {
                 try {
                     val widgetQuotes = response.body()!!
-                    TODO("Add functionality to show downloaded quotes")
+                    saveDownloadedQuotes(requireActivity, widgetQuotes)
+                    refreshQuotesList()
                 } catch (exception: Exception) {
                     showFailure(requireActivity)
                 }
@@ -40,6 +43,16 @@ class QuotesViewModel : ViewModel() {
         })
     }
 
+    private fun refreshQuotesList() {
+        TODO("Not yet implemented")
+    }
+
+    private fun saveDownloadedQuotes(requireActivity: FragmentActivity, widgetQuotes: List<Quote>) {
+        val preferences = WidgetPreferences(requireActivity)
+        val quotesJson = Gson().toJson(widgetQuotes).toString()
+        preferences.saveQuotes(quotesJson)
+    }
+
     private fun showFailure(requireActivity: FragmentActivity) {
         Toast.makeText(
             requireActivity,
@@ -48,14 +61,11 @@ class QuotesViewModel : ViewModel() {
         ).show()
     }
 
-    fun getQuotesList(): ArrayList<Quote> {
-        val widgetQuotes = ArrayList<Quote>()
-        for (a in 1..5) {
-            val quote = Quote()
-            quote.quote = "Test Title $a"
-            quote.quotemaster = "Test Message $a"
-            widgetQuotes.add(quote)
+    fun getQuotesList(requireActivity: FragmentActivity): ArrayList<Quote> {
+        val preferences = WidgetPreferences(requireActivity)
+        if (preferences.getSavedQuotes().isEmpty()) {
+            downloadQuotes(requireActivity)
         }
-        return widgetQuotes
+        return preferences.getSavedQuotes()
     }
 }

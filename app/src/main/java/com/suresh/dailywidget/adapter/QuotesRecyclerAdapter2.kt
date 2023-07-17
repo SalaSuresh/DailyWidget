@@ -9,7 +9,7 @@ import com.suresh.dailywidget.R
 import com.suresh.dailywidget.models.Quote
 
 class QuotesRecyclerAdapter2(
-    private val quotes: List<Quote>,
+    private val quotes: ArrayList<Quote>,
     private val itemClick: QuoteSelectListener
 ) :
     RecyclerView.Adapter<QuotesRecyclerAdapter2.QuoteViewHolder>() {
