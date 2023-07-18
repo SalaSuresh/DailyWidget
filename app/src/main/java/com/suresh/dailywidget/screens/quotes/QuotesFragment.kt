@@ -12,6 +12,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.suresh.dailywidget.R
@@ -22,6 +23,7 @@ import com.suresh.dailywidget.models.Quote
 class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     private lateinit var binding: FragmentQuotesBinding
     private lateinit var viewModel: QuotesViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[QuotesViewModel::class.java]
@@ -31,6 +33,10 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+        viewModel.quotesLiveData.observe(requireActivity(), Observer { quotes: ArrayList<Quote> ->
+            showQuotesList(quotes)
+        })
     }
 
     override fun onCreateView(
@@ -40,11 +46,15 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     ): View {
         binding = FragmentQuotesBinding.inflate(layoutInflater, container, false)
         setupActionbarItems()
-        showQuotesList()
         binding.fabAddQuote.setOnClickListener {
             showDialogToAddQuote()
         }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.readQuotesList(requireActivity())
     }
 
     private fun showDialogToAddQuote() {
@@ -76,12 +86,10 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun showQuotesList() {
+    private fun showQuotesList(quotes: ArrayList<Quote>) {
         binding.recyclerQuotes.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val quotesList = viewModel.getQuotesList(requireActivity())
-        val quotesRecyclerAdapter =
-            QuotesRecyclerAdapter2(quotesList, this)
+        val quotesRecyclerAdapter = QuotesRecyclerAdapter2(quotes, this)
         binding.recyclerQuotes.adapter = quotesRecyclerAdapter
     }
 

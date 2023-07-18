@@ -2,6 +2,8 @@ package com.suresh.dailywidget.screens.quotes
 
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.NavHostFragment
 import com.google.gson.Gson
@@ -15,12 +17,19 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class QuotesViewModel : ViewModel() {
+    private val _quotesLiveData = MutableLiveData<ArrayList<Quote>>()
+    val quotesLiveData: LiveData<ArrayList<Quote>> = _quotesLiveData
+
+    private fun setQuotesList(value: ArrayList<Quote>) {
+        _quotesLiveData.value = value
+    }
 
     fun closeFragment(quotesFragment: QuotesFragment) {
         NavHostFragment.findNavController(quotesFragment).navigateUp()
     }
 
     fun downloadQuotes(requireActivity: FragmentActivity) {
+        val preferences = WidgetPreferences(requireActivity)
         val apiInterface: ApiInterface =
             ApiClient().getApiClient()!!.create(ApiInterface::class.java)
         apiInterface.getWidgetQuotes().enqueue(object : Callback<List<Quote>> {
@@ -31,20 +40,18 @@ class QuotesViewModel : ViewModel() {
                 try {
                     val widgetQuotes = response.body()!!
                     saveDownloadedQuotes(requireActivity, widgetQuotes)
-                    refreshQuotesList()
+                    setQuotesList(preferences.getSavedQuotes())
                 } catch (exception: Exception) {
                     showFailure(requireActivity)
+                    setQuotesList(ArrayList())
                 }
             }
 
             override fun onFailure(call: Call<List<Quote>>, t: Throwable) {
                 showFailure(requireActivity)
+                setQuotesList(ArrayList())
             }
         })
-    }
-
-    private fun refreshQuotesList() {
-        TODO("Not yet implemented")
     }
 
     private fun saveDownloadedQuotes(requireActivity: FragmentActivity, widgetQuotes: List<Quote>) {
@@ -61,11 +68,12 @@ class QuotesViewModel : ViewModel() {
         ).show()
     }
 
-    fun getQuotesList(requireActivity: FragmentActivity): ArrayList<Quote> {
+    fun readQuotesList(requireActivity: FragmentActivity) {
         val preferences = WidgetPreferences(requireActivity)
         if (preferences.getSavedQuotes().isEmpty()) {
             downloadQuotes(requireActivity)
+        } else {
+            setQuotesList(preferences.getSavedQuotes())
         }
-        return preferences.getSavedQuotes()
     }
 }
