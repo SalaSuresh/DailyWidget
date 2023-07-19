@@ -39,5 +39,7 @@
     <string name="change_quote">Change Quote</string>
     <string name="more_quotes">More Quotes</string>
     <string name="widget_color">Widget Color</string>
+    <string name="save">Save</string>
+    <string name="your_quote">Your Quote</string>
 
 </resources>

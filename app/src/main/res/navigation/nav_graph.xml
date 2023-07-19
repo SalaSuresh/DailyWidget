@@ -25,5 +25,14 @@
         android:id="@+id/quotesFragment"
         android:name="com.suresh.dailywidget.screens.quotes.QuotesFragment"
         android:label="@string/quotes"
-        tools:layout="@layout/fragment_quotes" />
+        tools:layout="@layout/fragment_quotes" >
+        <action
+            android:id="@+id/action_quotesFragment_to_myQuoteDialog"
+            app:destination="@id/myQuoteDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/myQuoteDialog"
+        android:name="com.suresh.dailywidget.screens.quotes.MyQuoteDialog"
+        android:label="dialog_fragment_myquote"
+        tools:layout="@layout/dialog_fragment_myquote" />
 </navigation>

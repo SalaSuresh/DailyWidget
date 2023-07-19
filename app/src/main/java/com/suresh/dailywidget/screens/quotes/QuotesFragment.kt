@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.suresh.dailywidget.R
 import com.suresh.dailywidget.adapter.QuotesRecyclerAdapter2
@@ -59,7 +60,7 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     }
 
     private fun showDialogToAddQuote() {
-//        TODO("Not yet implemented")
+        findNavController().navigate(R.id.action_quotesFragment_to_myQuoteDialog)
     }
 
     private fun setupActionbarItems() {
@@ -101,6 +102,6 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     }
 
     override fun onShareClick(quote: Quote) {
-        TODO("Not yet implemented")
+        AppUtils.shareQuote(requireContext(), quote)
     }
 }

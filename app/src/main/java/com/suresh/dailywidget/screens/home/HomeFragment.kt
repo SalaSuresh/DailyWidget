@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.suresh.dailywidget.R
 import com.suresh.dailywidget.databinding.FragmentHomeBinding
+import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.preferences.WidgetPreferences
 import com.suresh.dailywidget.utils.AppUtils
 
@@ -101,10 +102,12 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_quotesFragment)
         }
         binding.fabShare.setOnClickListener {
-            val quote = widgetPreferences.getQuote()
-            val quoteMaster = widgetPreferences.getQuoteMaster()
-            val quoteMessage = "${quote}\n-${quoteMaster}"
-            AppUtils.shareQuote(requireContext(), quoteMessage)
+//            val quote = widgetPreferences.getQuote()
+//            val quoteMaster = widgetPreferences.getQuoteMaster()
+            val quote = Quote()
+            quote.quote = widgetPreferences.getQuote()
+            quote.quotemaster = widgetPreferences.getQuoteMaster()
+            AppUtils.shareQuote(requireContext(), quote)
         }
         return binding.root
     }

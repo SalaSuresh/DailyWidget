@@ -5,17 +5,19 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import com.suresh.dailywidget.R
+import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.screens.widget.MessageWidget
 
 class AppUtils {
     companion object {
-        fun shareQuote(context: Context, quoteMessage: String) {
+        fun shareQuote(context: Context, quote: Quote) {
+            val quoteMessage = "${quote.quote}\n-${quote.quotemaster}"
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, quoteMessage)
                 type = "text/plain"
             }
-
+            
             val shareIntent =
                 Intent.createChooser(sendIntent, context.getString(R.string.share_title))
             context.startActivity(shareIntent)
