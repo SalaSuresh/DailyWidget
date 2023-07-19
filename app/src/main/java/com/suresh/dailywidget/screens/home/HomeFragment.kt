@@ -1,7 +1,6 @@
 package com.suresh.dailywidget.screens.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,11 +12,13 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.suresh.dailywidget.R
 import com.suresh.dailywidget.databinding.FragmentHomeBinding
 import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.preferences.WidgetPreferences
+import com.suresh.dailywidget.screens.quotes.QuotesViewModel
 import com.suresh.dailywidget.utils.AppUtils
 
 class HomeFragment : Fragment() {
@@ -95,8 +96,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.fabRefresh.setOnClickListener {
-            Log.d("test", "Fab clicked")
-            //TODO("Need to implement")
+            AppUtils.changeQuote(requireActivity())
+            updateQuoteUI()
         }
         binding.fabMore.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_quotesFragment)
@@ -138,6 +139,13 @@ class HomeFragment : Fragment() {
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun updateQuoteUI() {
+        val quote = widgetPreferences.getQuote()
+        val quoteMaster = widgetPreferences.getQuoteMaster()
+        binding.textQuote.text = quote
+        binding.textQuoteMaster.text = quoteMaster
     }
 
 }
