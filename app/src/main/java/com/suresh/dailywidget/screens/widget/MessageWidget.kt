@@ -35,12 +35,16 @@ class MessageWidget : AppWidgetProvider() {
         appWidgetId: Int
     ) {
         val remoteViews = RemoteViews(context!!.packageName, R.layout.widget_message)
+        //TODO("Need to update background")
+//        remoteViews.setTextColor(R.id.textQuote, context.getColor(R.color.green_dark))
+//        remoteViews.setInt(R.id.layoutWidget, "setBackgroundColor", Color.parseColor("#FF4CAF50"))
         val widgetPreferences = WidgetPreferences(context)
         val quote = widgetPreferences.getQuote()
         val quoteMaster = widgetPreferences.getQuoteMaster()
 //        val isRefreshVisible = widgetPreferences.getRefreshOption()
         remoteViews.setTextViewText(R.id.textQuote, quote)
         remoteViews.setTextViewText(R.id.textQuoteMaster, quoteMaster)
+
 
 //        val refreshIntent = Intent(context, WidgetMessageReceiver::class.java)
 //        val pendingRefreshIntent = PendingIntent.getBroadcast(
