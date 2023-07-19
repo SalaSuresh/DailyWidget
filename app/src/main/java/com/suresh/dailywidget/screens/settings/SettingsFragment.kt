@@ -27,6 +27,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val widgetColorPreference: Preference? = findPreference("widgetColor")
         widgetColorPreference!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             Log.d("test", "show color pallet")
+            parentFragmentManager.let { CustomBottomSheetDialog.show(it) }
             false
         }
     }
