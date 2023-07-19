@@ -71,7 +71,6 @@ class HomeFragment : Fragment() {
                         R.drawable.ic_close
                     )
                 )
-
                 viewAllFab = true
             } else {
                 binding.fabRefresh.hide()
@@ -96,6 +95,7 @@ class HomeFragment : Fragment() {
 
         binding.fabRefresh.setOnClickListener {
             Log.d("test", "Fab clicked")
+            //TODO("Need to implement")
         }
         binding.fabMore.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_quotesFragment)
@@ -107,6 +107,15 @@ class HomeFragment : Fragment() {
             AppUtils.shareQuote(requireContext(), quoteMessage)
         }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val widgetPreferences = WidgetPreferences(requireContext())
+        val quote = widgetPreferences.getQuote()
+        val quoteMaster = widgetPreferences.getQuoteMaster()
+        binding.textQuote.text = quote
+        binding.textQuoteMaster.text = quoteMaster
     }
 
     private fun setupActionbarItems() {

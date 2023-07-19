@@ -18,12 +18,12 @@
         app:summary="@string/show_refresh_summary"
         app:title="@string/show_refresh" />
 
-    <SwitchPreferenceCompat
+    <!--<SwitchPreferenceCompat
         app:defaultValue="false"
         app:icon="@drawable/ic_quote_dark"
         app:key="keyShowQuotes"
         app:summary="@string/show_quotes_summary"
-        app:title="@string/show_quotes" />
+        app:title="@string/show_quotes" />-->
 
     <Preference
         app:icon="@drawable/ic_color"

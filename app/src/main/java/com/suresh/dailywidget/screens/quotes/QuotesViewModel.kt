@@ -76,4 +76,10 @@ class QuotesViewModel : ViewModel() {
             setQuotesList(preferences.getSavedQuotes())
         }
     }
+
+    fun saveQuote(quote: Quote, requireActivity: FragmentActivity){
+        val preferences = WidgetPreferences(requireActivity)
+        preferences.saveQuote(quote.quote.toString())
+        preferences.saveQuoteMaster(quote.quotemaster.toString())
+    }
 }

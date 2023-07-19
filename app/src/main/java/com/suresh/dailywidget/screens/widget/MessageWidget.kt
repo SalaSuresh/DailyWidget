@@ -7,12 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.RemoteViews
-import com.suresh.dailywidget.MainActivity
+import com.suresh.dailywidget.HomeActivity
 import com.suresh.dailywidget.R
 import com.suresh.dailywidget.preferences.WidgetPreferences
-import com.suresh.dailywidget.receiver.WidgetMessageReceiver
 
 class MessageWidget : AppWidgetProvider() {
     companion object {
@@ -40,25 +38,25 @@ class MessageWidget : AppWidgetProvider() {
         val widgetPreferences = WidgetPreferences(context)
         val quote = widgetPreferences.getQuote()
         val quoteMaster = widgetPreferences.getQuoteMaster()
-        val isRefreshVisible = widgetPreferences.getRefreshOption()
+//        val isRefreshVisible = widgetPreferences.getRefreshOption()
         remoteViews.setTextViewText(R.id.textQuote, quote)
         remoteViews.setTextViewText(R.id.textQuoteMaster, quoteMaster)
 
-        val refreshIntent = Intent(context, WidgetMessageReceiver::class.java)
-        val pendingRefreshIntent = PendingIntent.getBroadcast(
-            context,
-            0,
-            refreshIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        if (isRefreshVisible) {
-            remoteViews.setViewVisibility(R.id.imageRefresh, View.VISIBLE)
-            remoteViews.setOnClickPendingIntent(R.id.imageRefresh, pendingRefreshIntent)
-        } else {
-            remoteViews.setViewVisibility(R.id.imageRefresh, View.GONE)
-        }
+//        val refreshIntent = Intent(context, WidgetMessageReceiver::class.java)
+//        val pendingRefreshIntent = PendingIntent.getBroadcast(
+//            context,
+//            0,
+//            refreshIntent,
+//            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+//        )
+//        if (isRefreshVisible) {
+//            remoteViews.setViewVisibility(R.id.imageRefresh, View.VISIBLE)
+//            remoteViews.setOnClickPendingIntent(R.id.imageRefresh, pendingRefreshIntent)
+//        } else {
+//            remoteViews.setViewVisibility(R.id.imageRefresh, View.GONE)
+//        }
 
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(context, HomeActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             context,
             0,

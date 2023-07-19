@@ -19,6 +19,7 @@ import com.suresh.dailywidget.R
 import com.suresh.dailywidget.adapter.QuotesRecyclerAdapter2
 import com.suresh.dailywidget.databinding.FragmentQuotesBinding
 import com.suresh.dailywidget.models.Quote
+import com.suresh.dailywidget.utils.AppUtils
 
 class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     private lateinit var binding: FragmentQuotesBinding
@@ -58,7 +59,7 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     }
 
     private fun showDialogToAddQuote() {
-        TODO("Not yet implemented")
+//        TODO("Not yet implemented")
     }
 
     private fun setupActionbarItems() {
@@ -94,7 +95,9 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     }
 
     override fun onItemClick(quote: Quote) {
-        TODO("Not yet implemented")
+        viewModel.saveQuote(quote, requireActivity())
+        AppUtils.updateWidgetUI(requireContext())
+        viewModel.closeFragment(this@QuotesFragment)
     }
 
     override fun onShareClick(quote: Quote) {
