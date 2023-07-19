@@ -5,49 +5,20 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
-import com.suresh.dailywidget.screens.widget.MessageWidget
-import com.suresh.dailywidget.R
-import com.suresh.dailywidget.models.Quote
-import com.suresh.dailywidget.network.ApiClient
-import com.suresh.dailywidget.network.ApiInterface
 import com.suresh.dailywidget.preferences.WidgetPreferences
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.suresh.dailywidget.screens.widget.MessageWidget
 
 class WidgetMessageReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        getQuoteData(context)
+        updateWidgetQuote(context)
     }
 
-    private fun getQuoteData(context: Context?) {
-        val apiInterface: ApiInterface =
-            ApiClient().getApiClient()!!.create(ApiInterface::class.java)
-        apiInterface.getWidgetQuotes().enqueue(object : Callback<List<Quote>> {
-            override fun onResponse(
-                call: Call<List<Quote>>,
-                response: Response<List<Quote>>
-            ) {
-                val widgetQuotes = response.body()!!
-                val randomNumber = (widgetQuotes.indices).random()
-                updateWidgetQuote(context, widgetQuotes[randomNumber])
-            }
-
-            override fun onFailure(call: Call<List<Quote>>, t: Throwable) {
-                Toast.makeText(
-                    context,
-                    context!!.getString(R.string.failed_to_load),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-    }
-
-    private fun updateWidgetQuote(context: Context?, quoteMessage: Quote) {
+    private fun updateWidgetQuote(context: Context?) {
         val widgetPreferences = WidgetPreferences(context!!)
-        widgetPreferences.saveQuote(quoteMessage.quote!!)
-        widgetPreferences.saveQuoteMaster(quoteMessage.quotemaster!!)
+        val savedQuotesList = widgetPreferences.getSavedQuotes()
+        val randomNumber = (savedQuotesList.indices).random()
+        widgetPreferences.saveQuote(savedQuotesList[randomNumber].quote!!)
+        widgetPreferences.saveQuoteMaster(savedQuotesList[randomNumber].quotemaster!!)
         updateWidgetUI(context)
     }
 
