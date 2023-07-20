@@ -15,9 +15,9 @@
         android:theme="@style/Theme.DailyWidget"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop">
+            android:name=".HomeActivity"
+            android:launchMode="singleTop"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,21 +30,17 @@
         </activity>
 
         <receiver
-            android:name=".MessageWidget"
+            android:name=".screens.widget.MessageWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/message_widget_info" />
         </receiver>
         <receiver android:name=".receiver.WidgetMessageReceiver" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>

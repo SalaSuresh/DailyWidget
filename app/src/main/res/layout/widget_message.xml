@@ -18,7 +18,7 @@
         android:layout_marginEnd="8dp"
         android:clickable="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/baseline_refresh_24"
+        android:src="@drawable/ic_refresh_dark"
         android:visibility="gone" />
 
     <TextView
