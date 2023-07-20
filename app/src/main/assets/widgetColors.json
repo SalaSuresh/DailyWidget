@@ -1,5 +1,9 @@
 [
   {
+    "backgroundColor": "#FFFFFF",
+    "textColor": "#000000"
+  },
+  {
     "backgroundColor": "#6200EA",
     "textColor": "#FFFFFF"
   },
