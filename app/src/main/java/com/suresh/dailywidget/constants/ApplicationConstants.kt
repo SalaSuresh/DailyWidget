@@ -9,5 +9,6 @@ class ApplicationConstants {
         var DEFAULT_WIDGET_TEXT_COLOR = "#000000"
 
         var REFRESH_TIME: Long = 60 * 1000
+        var COLORS_FILE_NAME = "widgetColors.json"
     }
 }

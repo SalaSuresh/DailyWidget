@@ -19,15 +19,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
+    private lateinit var viewModel: HomeActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //TODO: will be used later based on requirement
-        val viewModel: HomeActivityViewModel =
-            ViewModelProvider(this)[HomeActivityViewModel::class.java]
+        viewModel = ViewModelProvider(this)[HomeActivityViewModel::class.java]
 
         navHostFragment =
             supportFragmentManager
@@ -48,7 +46,6 @@ class HomeActivity : AppCompatActivity() {
             ApplicationConstants.REFRESH_TIME,
             pendingIntent
         )
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

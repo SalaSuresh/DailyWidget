@@ -1,5 +1,6 @@
 package com.suresh.dailywidget.screens.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.suresh.dailywidget.adapter.ColorPaletteRecyclerAdapter
+import com.suresh.dailywidget.constants.ApplicationConstants
 import com.suresh.dailywidget.databinding.CustomBottomSheetBinding
 import com.suresh.dailywidget.models.PaletteColor
 import com.suresh.dailywidget.preferences.WidgetPreferences
+import com.suresh.dailywidget.utils.AppUtils
 
 class CustomBottomSheetDialog : BottomSheetDialogFragment(),
     ColorPaletteRecyclerAdapter.ColorSelectListener {
@@ -37,46 +42,22 @@ class CustomBottomSheetDialog : BottomSheetDialogFragment(),
         showRecyclerItems()
     }
 
+    private fun getPaletteColors(context: Context, fileName: String): ArrayList<PaletteColor> {
+        val assetManager = context.assets
+        val inputStream = assetManager.open(fileName)
+
+        val jsonString = inputStream.bufferedReader().use { it.readText() }
+        val listType = object : TypeToken<ArrayList<PaletteColor?>?>() {}.type
+        return Gson().fromJson(jsonString, listType)
+    }
+
     private fun showRecyclerItems() {
-        val colorsList: ArrayList<PaletteColor> = ArrayList()
-        val paletteColor = PaletteColor()
-        paletteColor.textColor = "#000000"
-        paletteColor.backgroundColor = "#f0f0eb"
-
-        val paletteColor2 = PaletteColor()
-        paletteColor2.textColor = "#FFFFFF"
-        paletteColor2.backgroundColor = "#61abc7"
-
-        val paletteColor3 = PaletteColor()
-        paletteColor3.textColor = "#FFFFFF"
-        paletteColor3.backgroundColor = "#592496"
-
-        val paletteColor4 = PaletteColor()
-        paletteColor4.textColor = "#000000"
-        paletteColor4.backgroundColor = "#cf4654"
-
-        val paletteColor5 = PaletteColor()
-        paletteColor5.textColor = "#FFFFFF"
-        paletteColor5.backgroundColor = "#d6c918"
-
-        val paletteColor6 = PaletteColor()
-        paletteColor6.textColor = "#FFFFFF"
-        paletteColor6.backgroundColor = "#183ed6"
-
-        val paletteColor7 = PaletteColor()
-        paletteColor7.textColor = "#FFFFFF"
-        paletteColor7.backgroundColor = "#183de6"
-
-        colorsList.add(paletteColor)
-        colorsList.add(paletteColor2)
-        colorsList.add(paletteColor3)
-        colorsList.add(paletteColor4)
-        colorsList.add(paletteColor5)
-        colorsList.add(paletteColor6)
-        colorsList.add(paletteColor7)
-
         colorPaletteRecyclerAdapter =
-            ColorPaletteRecyclerAdapter(requireContext(), colorsList, this@CustomBottomSheetDialog)
+            ColorPaletteRecyclerAdapter(
+                requireContext(),
+                getPaletteColors(requireContext(), ApplicationConstants.COLORS_FILE_NAME),
+                this@CustomBottomSheetDialog
+            )
         binding.recyclerColorPalette.layoutManager =
             LinearLayoutManager(requireContext(), GridLayoutManager.HORIZONTAL, false)
         binding.recyclerColorPalette.adapter = colorPaletteRecyclerAdapter
@@ -92,5 +73,6 @@ class CustomBottomSheetDialog : BottomSheetDialogFragment(),
         val widgetPreferences = WidgetPreferences(requireContext())
         widgetPreferences.saveWidgetColor(paletteColor)
         colorPaletteRecyclerAdapter.notifyDataSetChanged()
+        AppUtils.updateWidgetUI(requireContext())
     }
 }
