@@ -17,4 +17,4 @@ Java 11 or above
 None
 
 ### Screenshots
-![Home Screen](https://github.com/SalaSuresh/DailyWidget/blob/main/screens/Screenshot_1.jpeg?raw=true)
+![Home Screen](https://github.com/SalaSuresh/DailyWidget/blob/main/screens/Screenshot_1.png?raw=true)
