@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.suresh.dailywidget.constants.ApplicationConstants
+import com.suresh.dailywidget.models.PaletteColor
 import com.suresh.dailywidget.models.Quote
 
 
@@ -78,5 +79,32 @@ class WidgetPreferences(context: Context) {
             val quotesList: ArrayList<Quote> = Gson().fromJson(savedQuotesJson, listType)
             quotesList
         }
+    }
+
+    fun saveWidgetColor(paletteColor: PaletteColor) {
+        getPreferenceEditor().putString(
+            PreferenceConstants.PREF_WIDGET_BG_COLOR,
+            paletteColor.backgroundColor
+        )
+        getPreferenceEditor().putString(
+            PreferenceConstants.PREF_WIDGET_TEXT_COLOR,
+            paletteColor.textColor
+        )
+        getPreferenceEditor().apply()
+    }
+
+    fun getWidgetColor(): PaletteColor {
+        val widgetColor = sharedPreference!!.getString(
+            PreferenceConstants.PREF_WIDGET_BG_COLOR,
+            ApplicationConstants.DEFAULT_WIDGET_BG_COLOR
+        )
+        val textColor = sharedPreference!!.getString(
+            PreferenceConstants.PREF_WIDGET_TEXT_COLOR,
+            ApplicationConstants.DEFAULT_WIDGET_TEXT_COLOR
+        )
+        val paletteColor = PaletteColor()
+        paletteColor.textColor = textColor!!
+        paletteColor.backgroundColor = widgetColor!!
+        return paletteColor
     }
 }

@@ -5,6 +5,9 @@ class ApplicationConstants {
         var DEFAULT_QUOTE = "You're never wrong to do the right thing"
         var DEFAULT_QUOTE_MASTER = "Mark Twain"
 
+        var DEFAULT_WIDGET_BG_COLOR = "#FFFFFF"
+        var DEFAULT_WIDGET_TEXT_COLOR = "#000000"
+
         var REFRESH_TIME: Long = 60 * 1000
     }
 }

@@ -11,9 +11,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.suresh.dailywidget.adapter.ColorPaletteRecyclerAdapter
 import com.suresh.dailywidget.databinding.CustomBottomSheetBinding
 import com.suresh.dailywidget.models.PaletteColor
+import com.suresh.dailywidget.preferences.WidgetPreferences
 
-class CustomBottomSheetDialog : BottomSheetDialogFragment() {
+class CustomBottomSheetDialog : BottomSheetDialogFragment(),
+    ColorPaletteRecyclerAdapter.ColorSelectListener {
     private lateinit var binding: CustomBottomSheetBinding
+    private lateinit var colorPaletteRecyclerAdapter: ColorPaletteRecyclerAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,8 +75,8 @@ class CustomBottomSheetDialog : BottomSheetDialogFragment() {
         colorsList.add(paletteColor6)
         colorsList.add(paletteColor7)
 
-        val colorPaletteRecyclerAdapter = ColorPaletteRecyclerAdapter(colorsList)
-//        binding.recyclerColorPalette.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        colorPaletteRecyclerAdapter =
+            ColorPaletteRecyclerAdapter(requireContext(), colorsList, this@CustomBottomSheetDialog)
         binding.recyclerColorPalette.layoutManager =
             LinearLayoutManager(requireContext(), GridLayoutManager.HORIZONTAL, false)
         binding.recyclerColorPalette.adapter = colorPaletteRecyclerAdapter
@@ -83,5 +86,11 @@ class CustomBottomSheetDialog : BottomSheetDialogFragment() {
         fun show(fragmentManager: FragmentManager) {
             CustomBottomSheetDialog().show(fragmentManager, "CustomBottomSheet")
         }
+    }
+
+    override fun onColorSelected(paletteColor: PaletteColor) {
+        val widgetPreferences = WidgetPreferences(requireContext())
+        widgetPreferences.saveWidgetColor(paletteColor)
+        colorPaletteRecyclerAdapter.notifyDataSetChanged()
     }
 }
