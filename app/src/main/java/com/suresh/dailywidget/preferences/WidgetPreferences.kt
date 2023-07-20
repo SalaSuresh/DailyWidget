@@ -3,8 +3,14 @@ package com.suresh.dailywidget.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.suresh.dailywidget.constants.ApplicationConstants
+import com.suresh.dailywidget.models.PaletteColor
+import com.suresh.dailywidget.models.Quote
+
 
 class WidgetPreferences(context: Context) {
     private var sharedPreference: SharedPreferences? = null
@@ -59,4 +65,46 @@ class WidgetPreferences(context: Context) {
         )
     }
 
+    fun saveQuotes(quotesJson: String) {
+        getPreferenceEditor().putString(PreferenceConstants.PREF_QUOTES, quotesJson)
+        getPreferenceEditor().apply()
+    }
+
+    fun getSavedQuotes(): ArrayList<Quote> {
+        val savedQuotesJson = sharedPreference!!.getString(PreferenceConstants.PREF_QUOTES, "")
+        return if (TextUtils.isEmpty(savedQuotesJson)) {
+            ArrayList()
+        } else {
+            val listType = object : TypeToken<ArrayList<Quote?>?>() {}.type
+            val quotesList: ArrayList<Quote> = Gson().fromJson(savedQuotesJson, listType)
+            quotesList
+        }
+    }
+
+    fun saveWidgetColor(paletteColor: PaletteColor) {
+        getPreferenceEditor().putString(
+            PreferenceConstants.PREF_WIDGET_BG_COLOR,
+            paletteColor.backgroundColor
+        )
+        getPreferenceEditor().putString(
+            PreferenceConstants.PREF_WIDGET_TEXT_COLOR,
+            paletteColor.textColor
+        )
+        getPreferenceEditor().apply()
+    }
+
+    fun getWidgetColor(): PaletteColor {
+        val widgetColor = sharedPreference!!.getString(
+            PreferenceConstants.PREF_WIDGET_BG_COLOR,
+            ApplicationConstants.DEFAULT_WIDGET_BG_COLOR
+        )
+        val textColor = sharedPreference!!.getString(
+            PreferenceConstants.PREF_WIDGET_TEXT_COLOR,
+            ApplicationConstants.DEFAULT_WIDGET_TEXT_COLOR
+        )
+        val paletteColor = PaletteColor()
+        paletteColor.textColor = textColor!!
+        paletteColor.backgroundColor = widgetColor!!
+        return paletteColor
+    }
 }

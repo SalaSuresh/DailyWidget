@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.suresh.dailywidget.screens.home.HomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_quotesFragment"
+            app:destination="@id/quotesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.suresh.dailywidget.screens.settings.SettingsFragment"
+        android:label="@string/settings" />
+    <fragment
+        android:id="@+id/quotesFragment"
+        android:name="com.suresh.dailywidget.screens.quotes.QuotesFragment"
+        android:label="@string/quotes"
+        tools:layout="@layout/fragment_quotes" >
+        <action
+            android:id="@+id/action_quotesFragment_to_myQuoteDialog"
+            app:destination="@id/myQuoteDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/myQuoteDialog"
+        android:name="com.suresh.dailywidget.screens.quotes.MyQuoteDialog"
+        android:label="dialog_fragment_myquote"
+        tools:layout="@layout/dialog_fragment_myquote" />
+</navigation>

@@ -12,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.suresh.dailywidget.adapter.QuotesRecyclerAdapter
-import com.suresh.dailywidget.model.Quote
+import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.network.ApiClient
 import com.suresh.dailywidget.network.ApiInterface
 import com.suresh.dailywidget.preferences.WidgetPreferences
+import com.suresh.dailywidget.screens.widget.MessageWidget
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
