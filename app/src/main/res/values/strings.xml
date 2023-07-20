@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Daily Quote</string>
     <string name="failed_to_load">Failed to load Quote, please try later</string>
+    <string name="copied_to_clipbard">Copied to Clip Board</string>
     <string name="test_message">\"Test Message\"</string>
     <string name="refresh">Refresh</string>
     <string name="action">Action</string>
