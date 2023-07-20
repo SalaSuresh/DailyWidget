@@ -1,15 +1,18 @@
 package com.suresh.dailywidget.utils
 
 import android.appwidget.AppWidgetManager
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.suresh.dailywidget.R
 import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.preferences.WidgetPreferences
 import com.suresh.dailywidget.screens.widget.MessageWidget
+
 
 class AppUtils {
     companion object {
@@ -24,6 +27,18 @@ class AppUtils {
             val shareIntent =
                 Intent.createChooser(sendIntent, context.getString(R.string.share_title))
             context.startActivity(shareIntent)
+        }
+
+        fun copyQuote(context: Context, quote: Quote) {
+            val quoteMessage = "${quote.quote}\n-${quote.quotemaster}"
+            val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("label", quoteMessage)
+            clipBoard.setPrimaryClip(clipData)
+            Toast.makeText(
+                context,
+                context.getString(R.string.copied_to_clipbard),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         fun updateWidgetUI(context: Context) {

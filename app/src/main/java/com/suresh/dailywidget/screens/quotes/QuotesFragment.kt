@@ -17,12 +17,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.suresh.dailywidget.R
-import com.suresh.dailywidget.adapter.QuotesRecyclerAdapter2
+import com.suresh.dailywidget.adapter.QuotesRecyclerAdapter
 import com.suresh.dailywidget.databinding.FragmentQuotesBinding
 import com.suresh.dailywidget.models.Quote
 import com.suresh.dailywidget.utils.AppUtils
 
-class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
+class QuotesFragment : Fragment(), QuotesRecyclerAdapter.QuoteSelectListener {
     private lateinit var binding: FragmentQuotesBinding
     private lateinit var viewModel: QuotesViewModel
 
@@ -91,7 +91,7 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
     private fun showQuotesList(quotes: ArrayList<Quote>) {
         binding.recyclerQuotes.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val quotesRecyclerAdapter = QuotesRecyclerAdapter2(quotes, this)
+        val quotesRecyclerAdapter = QuotesRecyclerAdapter(quotes, this)
         binding.recyclerQuotes.adapter = quotesRecyclerAdapter
     }
 
@@ -103,5 +103,9 @@ class QuotesFragment : Fragment(), QuotesRecyclerAdapter2.QuoteSelectListener {
 
     override fun onShareClick(quote: Quote) {
         AppUtils.shareQuote(requireContext(), quote)
+    }
+
+    override fun onCopyClick(quote: Quote) {
+        AppUtils.copyQuote(requireContext(), quote)
     }
 }
