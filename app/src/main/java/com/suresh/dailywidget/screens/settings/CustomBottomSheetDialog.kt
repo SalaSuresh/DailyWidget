@@ -37,7 +37,7 @@ class CustomBottomSheetDialog : BottomSheetDialogFragment(),
         // Add any listeners or event handlers that you need to your bottom sheet here.
 
         // Set the peek height of the bottom sheet.
-        (view.parent as View).layoutParams.height = 200
+        (view.parent as View).layoutParams.height = 300
 
         showRecyclerItems()
     }
